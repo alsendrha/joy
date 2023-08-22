@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List listData = [];
   bool isLoading = false;
+  int menuListData = 1;
   int currentPage = 1;
   final ScrollController _scrollController = ScrollController();
 
@@ -24,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isLoading = true;
       });
       String url =
-          'https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=8mbfp3rur332azyf&locale=kr&category=c5&page=$page';
+          'https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=8mbfp3rur332azyf&locale=kr&category=c$menuListData&page=$page';
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         print('데이터 확인 : ${response.body}');
@@ -67,7 +68,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       builder: (context) {
-        return const MenuList();
+        return MenuList(
+          menuNumber: (value) {
+            setState(() {
+              menuListData = value;
+              currentPage = 1; // 페이지를 리셋합니다.
+              jejuData(currentPage);
+              _scrollController.animateTo(0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
+            });
+          },
+        );
       },
     );
   }
