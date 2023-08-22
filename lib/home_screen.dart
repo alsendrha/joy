@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final widthSize = MediaQuery.of(context).size.width / 410;
-    final heightSize = MediaQuery.of(context).size.height / 900;
+    final heightSize = MediaQuery.of(context).size.height / 844;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -114,12 +114,19 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.white,
           flexibleSpace: FlexibleSpaceBar(
             background: Padding(
-              padding: EdgeInsets.only(top: heightSize * 30),
+              padding: EdgeInsets.only(
+                top: heightSize * 30,
+                left: widthSize * 24,
+                right: widthSize * 24,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.language_rounded),
+                  const Icon(
+                    Icons.language_rounded,
+                    size: 40,
+                  ),
                   const Icon(
                     Icons.add,
                     color: Colors.transparent,
@@ -129,7 +136,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       menuList();
                     },
                     child: const Icon(
-                      Icons.menu_book_rounded,
+                      Icons.menu,
+                      size: 40,
                     ),
                   ),
                 ],

@@ -79,20 +79,20 @@ class _DetailPageState extends State<DetailPage> {
                 fontSize: 16,
               ),
             ),
-            const SizedBox(
-              height: 8,
+            SizedBox(
+              height: heightSize * 8,
             ),
             Text('${widget.data['tag'] ?? ''}'),
-            const SizedBox(
-              height: 8,
+            SizedBox(
+              height: heightSize * 8,
             ),
             Text('${widget.data['roadaddress'] ?? ''}'),
-            const SizedBox(
-              height: 8,
+            SizedBox(
+              height: heightSize * 8,
             ),
             Text('${widget.data['introduction'] ?? ''}'),
-            const SizedBox(
-              height: 40,
+            SizedBox(
+              height: heightSize * 40,
             ),
             const Text(
               '위치',
@@ -101,11 +101,11 @@ class _DetailPageState extends State<DetailPage> {
                 fontSize: 20,
               ),
             ),
-            const SizedBox(
-              height: 8,
+            SizedBox(
+              height: heightSize * 8,
             ),
             SizedBox(
-              height: 400,
+              height: heightSize * 400,
               child: GoogleMap(
                 mapType: MapType.normal,
                 markers: Set.from(_markers),

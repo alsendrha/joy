@@ -10,6 +10,8 @@ class DetailImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final widthSize = MediaQuery.of(context).size.width / 410;
+    final heightSize = MediaQuery.of(context).size.height / 844;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -24,10 +26,16 @@ class DetailImage extends StatelessWidget {
           ),
         ),
       ),
+      backgroundColor: Colors.grey[800],
       body: Center(
-        child: Image.network(
-          image,
-          fit: BoxFit.cover,
+        child: InteractiveViewer(
+          child: SizedBox(
+            height: widthSize * 1000,
+            child: Image.network(
+              image,
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
       ),
     );
