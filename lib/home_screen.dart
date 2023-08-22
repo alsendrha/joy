@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:jeju_app/detail_page.dart';
+import 'package:jeju_app/home_screen_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isLoading = true;
       });
       String url =
-          'https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=8mbfp3rur332azyf&locale=kr&category=c1&page=$page';
+          'https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=8mbfp3rur332azyf&locale=kr&category=c5&page=$page';
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         print('데이터 확인 : ${response.body}');
@@ -53,6 +54,21 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
+    );
+  }
+
+  void menuList() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
+      builder: (context) {
+        return const MenuList();
+      },
     );
   }
 
@@ -87,13 +103,23 @@ class _HomeScreenState extends State<HomeScreen> {
           flexibleSpace: FlexibleSpaceBar(
             background: Padding(
               padding: EdgeInsets.only(top: heightSize * 30),
-              child: const Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icon(Icons.language_rounded),
-                  Icon(Icons.add),
-                  Icon(Icons.menu_book_rounded),
+                  const Icon(Icons.language_rounded),
+                  const Icon(
+                    Icons.add,
+                    color: Colors.transparent,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      menuList();
+                    },
+                    child: const Icon(
+                      Icons.menu_book_rounded,
+                    ),
+                  ),
                 ],
               ),
             ),
