@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:jeju_app/detail_image.dart';
@@ -39,6 +40,19 @@ class _DetailPageState extends State<DetailPage> {
     final widthSize = MediaQuery.of(context).size.width / 410;
     final heightSize = MediaQuery.of(context).size.height / 900;
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            CupertinoIcons.back,
+          ),
+        ),
+      ),
+      extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,26 +60,22 @@ class _DetailPageState extends State<DetailPage> {
             SizedBox(
               height: widthSize * 300,
               width: double.infinity,
-              child: Hero(
-                tag: 'image',
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return DetailImage(
-                            image: widget.data['repPhoto']['photoid']
-                                ['imgpath'],
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: Image.network(
-                    widget.data['repPhoto']['photoid']['imgpath'],
-                    fit: BoxFit.cover,
-                  ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return DetailImage(
+                          image: widget.data['repPhoto']['photoid']['imgpath'],
+                        );
+                      },
+                    ),
+                  );
+                },
+                child: Image.network(
+                  widget.data['repPhoto']['photoid']['imgpath'],
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

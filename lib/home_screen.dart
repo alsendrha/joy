@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List listData = [];
   bool isLoading = false;
   int menuListData = 1;
+  String languageData = 'kr';
   int currentPage = 1;
   final ScrollController _scrollController = ScrollController();
 
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isLoading = true;
       });
       String url =
-          'https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=8mbfp3rur332azyf&locale=kr&category=c$menuListData&page=$page';
+          'https://api.visitjeju.net/vsjApi/contents/searchList?apiKey=8mbfp3rur332azyf&locale=$languageData&category=c$menuListData&page=$page';
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         print('데이터 확인 : ${response.body}');
@@ -55,6 +56,32 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
+    );
+  }
+
+  void languageList() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
+      builder: (context) {
+        return LanguageListMenu(
+          menuName: (value) {
+            setState(() {
+              languageData = value;
+              currentPage = 1; // 페이지를 리셋합니다.
+              jejuData(currentPage);
+              _scrollController.animateTo(0,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut);
+            });
+          },
+        );
+      },
     );
   }
 
@@ -123,18 +150,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(
-                    Icons.language_rounded,
-                    size: 40,
+                  GestureDetector(
+                    onTap: languageList,
+                    child: const Icon(
+                      Icons.language_rounded,
+                      size: 40,
+                    ),
                   ),
                   const Icon(
                     Icons.add,
                     color: Colors.transparent,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      menuList();
-                    },
+                    onTap: menuList,
                     child: const Icon(
                       Icons.menu,
                       size: 40,
@@ -180,30 +208,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CircularProgressIndicator(),
+                                CircularProgressIndicator(
+                                  color: Colors.transparent,
+                                  backgroundColor: Colors.transparent,
+                                ),
                               ],
                             ),
                           )
                         : SizedBox(
                             height: widthSize * 200,
                             width: double.infinity,
-                            child: Hero(
-                              tag: 'image',
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(15),
-                                  topRight: Radius.circular(15),
-                                ),
-                                child: imageUrl.isNotEmpty
-                                    ? Image.network(
-                                        imageUrl,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : Image.asset(
-                                        'images/no_image.png',
-                                        fit: BoxFit.cover,
-                                      ),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
                               ),
+                              child: imageUrl.isNotEmpty
+                                  ? Image.network(
+                                      imageUrl,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(
+                                      'images/no_image.png',
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
                           ),
                     isLoading
@@ -230,6 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         listData[index]['title'] ?? '',
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w600,
+                                          overflow: TextOverflow.ellipsis,
                                           fontSize: 16,
                                         ),
                                       ),
@@ -242,11 +271,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: heightSize * 8,
-                                      ),
                                       Text(
-                                          listData[index]['roadaddress'] ?? ''),
+                                        listData[index]['roadaddress'] ?? '',
+                                        style: const TextStyle(
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),

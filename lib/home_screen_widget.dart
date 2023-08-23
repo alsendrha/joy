@@ -188,3 +188,159 @@ class MenuWidget extends StatelessWidget {
     );
   }
 }
+
+class LanguageListMenu extends StatefulWidget {
+  final ValueChanged<String> menuName;
+  const LanguageListMenu({
+    super.key,
+    required this.menuName,
+  });
+
+  @override
+  State<LanguageListMenu> createState() => _LanguageListMenuState();
+}
+
+class _LanguageListMenuState extends State<LanguageListMenu> {
+  String menuName = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final widthSize = MediaQuery.of(context).size.width / 410;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(
+          height: 16,
+        ),
+        const Padding(
+          padding: EdgeInsets.only(left: 14),
+          child: Text(
+            '메뉴',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        const Divider(height: 1, thickness: 1),
+        const SizedBox(
+          height: 16,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: widthSize * 12),
+          child: Column(
+            children: [
+              MenuWidget(
+                onTap: () {
+                  setState(() {
+                    menuName = 'kr';
+                  });
+                  print('메뉴 : $menuName');
+                },
+                icons: menuName == 'kr'
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.circle_outlined,
+                iconColor: menuName == 'kr' ? Colors.blue : Colors.grey,
+                text: '한국어',
+                textColor: menuName == 'kr' ? Colors.blue : Colors.grey,
+              ),
+              MenuWidget(
+                onTap: () {
+                  setState(() {
+                    menuName = 'en';
+                  });
+                  print('메뉴 : $menuName');
+                },
+                icons: menuName == 'en'
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.circle_outlined,
+                iconColor: menuName == 'en' ? Colors.blue : Colors.grey,
+                text: '영어',
+                textColor: menuName == 'en' ? Colors.blue : Colors.grey,
+              ),
+              MenuWidget(
+                onTap: () {
+                  setState(() {
+                    menuName = 'jp';
+                  });
+                  print('메뉴 : $menuName');
+                },
+                icons: menuName == 'jp'
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.circle_outlined,
+                iconColor: menuName == 'jp' ? Colors.blue : Colors.grey,
+                text: '일본어',
+                textColor: menuName == 'jp' ? Colors.blue : Colors.grey,
+              ),
+              MenuWidget(
+                onTap: () {
+                  setState(() {
+                    menuName = 'cn';
+                  });
+                  print('메뉴 : $menuName');
+                },
+                icons: menuName == 'cn'
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.circle_outlined,
+                iconColor: menuName == 'cn' ? Colors.blue : Colors.grey,
+                text: '중국어(간체)',
+                textColor: menuName == 'cn' ? Colors.blue : Colors.grey,
+              ),
+              MenuWidget(
+                onTap: () {
+                  setState(() {
+                    menuName = 'zh';
+                  });
+                  print('메뉴 : $menuName');
+                },
+                icons: menuName == 'zh'
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.circle_outlined,
+                iconColor: menuName == 'zh' ? Colors.blue : Colors.grey,
+                text: '중국어(번체)',
+                textColor: menuName == 'zh' ? Colors.blue : Colors.grey,
+              ),
+              MenuWidget(
+                onTap: () {
+                  setState(() {
+                    menuName = 'my';
+                  });
+                  print('메뉴 : $menuName');
+                },
+                icons: menuName == 'my'
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.circle_outlined,
+                iconColor: menuName == 'my' ? Colors.blue : Colors.grey,
+                text: '말레이시아어',
+                textColor: menuName == 'my' ? Colors.blue : Colors.grey,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    maximumSize: const Size(double.infinity, 50),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    setState(() {
+                      widget.menuName(
+                        menuName,
+                      );
+                    });
+                    print('메뉴 : $menuName');
+                  },
+                  child: const Text('확인'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
